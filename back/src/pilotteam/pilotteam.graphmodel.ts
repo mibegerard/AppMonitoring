@@ -1,4 +1,4 @@
-
+// Fichier placeholder pour pilotteam.graphmodel.ts - requis pour éviter les erreurs SonarQube
 import { Field, ObjectType } from '@nestjs/graphql';
 import { UUID } from 'crypto';
 import { Pilot } from 'src/pilot/pilot.graphmodel';
