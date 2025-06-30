@@ -13,6 +13,13 @@ export class ClerkAuthGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    // Bypass /metrics
+    const httpContext = context.switchToHttp();
+    const httpReq = httpContext.getRequest?.();
+    if (httpReq && httpReq.path === '/metrics') {
+      return true;
+    }
+
     // Vérifier si la route est marquée comme publique
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
