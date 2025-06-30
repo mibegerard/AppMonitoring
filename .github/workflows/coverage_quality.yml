@@ -17,13 +17,18 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd back
+          npm ci
       - name: Run tests with coverage
-        run: npm test -- --coverage
+        run: |
+          cd back
+          npm test -- --coverage
       - uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
 
   code_quality:
     runs-on: ubuntu-latest
