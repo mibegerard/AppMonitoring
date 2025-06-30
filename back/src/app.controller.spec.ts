@@ -15,7 +15,7 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
+    it('should return HTML containing the API title', () => {
       // Mock the Response object
       const res = {
         type: jest.fn().mockReturnThis(),
@@ -25,7 +25,8 @@ describe('AppController', () => {
       appController.getHello(res);
 
       expect(res.type).toHaveBeenCalledWith('text/html');
-      expect(res.send).toHaveBeenCalledWith('Hello World!');
+      // Vérifie que le HTML retourné contient le titre attendu
+      expect(res.send).toHaveBeenCalledWith(expect.stringContaining('<h1>P10 API 🏁</h1>'));
     });
   });
 });
