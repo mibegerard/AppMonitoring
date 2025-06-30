@@ -1,4 +1,4 @@
-name: Coverage & Quality Report ✅
+name: Coverage & Quality Report
 
 on:
   push:
