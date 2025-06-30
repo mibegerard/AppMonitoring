@@ -3,17 +3,18 @@ import { UUID } from 'crypto';
 import { PrismaService } from 'src/prisma.service';
 import { UserService } from 'src/user/user.service';
 import { Bet, CreateBetInput } from './bet.graphmodel';
-// import { GrandprixService } from 'src/grandprix/grandprix.service';
-// import { PilotService } from 'src/pilot/pilot.service';
+import { CustomMetricsService } from '../metrics/custom-metrics.service';
 
 @Injectable()
 export class BetService {
   constructor(
     private prisma: PrismaService,
     private userService: UserService,
+    private metrics: CustomMetricsService,
   ) {}
 
   async createBet(betInput: CreateBetInput): Promise<Bet> {
+    const start = Date.now();
     try {
       const bet = await this.prisma.bet.create({
         data: {
@@ -34,7 +35,8 @@ export class BetService {
           },
         },
       });
-
+      this.metrics.incrementBetsCreated();
+      this.metrics.observeBetCreationDuration((Date.now() - start) / 1000);
       return {
         id: bet.id as UUID,
         user: await this.userService.getUser({ clerkId: bet.userId }),
@@ -67,6 +69,7 @@ export class BetService {
         },
       };
     } catch (error) {
+      this.metrics.incrementErrors();
       if (error.code === 'P2002' && error.meta?.target?.includes('joinCode')) {
         throw new Error(
           'Failed to generate a unique join code. Please try again.',

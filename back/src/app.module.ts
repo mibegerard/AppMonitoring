@@ -24,6 +24,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { UserController } from './user/user.controller';
 import { LeagueController } from './league/league.controller';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+import { MetricsModule } from './metrics/metrics.module';
 
 
 @Module({
@@ -52,6 +53,7 @@ import { PrometheusModule } from '@willsoto/nestjs-prometheus';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    MetricsModule,
   ],
   controllers: [AppController, UserController, LeagueController],
   providers: [
