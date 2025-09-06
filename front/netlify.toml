@@ -14,7 +14,7 @@
 
 [build.environment]
   # Use Node.js version matching your project
-  NODE_VERSION = "22.x"
+  NODE_VERSION = "18.20.0"
 
 # Netlify Next.js plugin for SSR and API routes
 [[plugins]]
