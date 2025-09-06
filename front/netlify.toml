@@ -1,0 +1,25 @@
+# netlify.toml for p10-app frontend
+
+[build]
+  # Base directory where your frontend lives
+  base = "front"
+  # Directory Netlify should publish
+  publish = ".next"
+  # Command to install dependencies and build
+  command = "npm install && npm run build"
+
+[functions]
+  # Directory for Netlify serverless functions
+  directory = "front/netlify/functions"
+
+[build.environment]
+  # Use Node.js version matching your project
+  NODE_VERSION = "22.x"
+
+# Netlify Next.js plugin for SSR and API routes
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Optional: specify production branch
+[context.production]
+  branch = "main"
